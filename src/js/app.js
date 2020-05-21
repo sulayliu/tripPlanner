@@ -7,13 +7,21 @@ originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
   if(value !== ``) {
     console.log(value)
-    // searchStreets(inputEle.value);
+    // searchLocation(value);
   }
   event.preventDefault();
 });
 
+destinationFormEle.addEventListener(`submit`, function(event){
+  const value = event.target.querySelector(`input`).value;
+  if(value !== ``) {
+    console.log(value)
+    // searchLocation(value);
+  }
+  event.preventDefault();
+});
 
-function searchStreets(name) {
+function searchLocation(name) {
   fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875, 49.766204, -96.953987, 49.99275&access_token=${apikey}&limit=10`)
     .then((resp) => {
       if (resp.ok) {
@@ -26,7 +34,6 @@ function searchStreets(name) {
       getStreetList(json.features);
     })
 }
-
 
 function getStreetList(features) {
   let streetHTML = ``;
