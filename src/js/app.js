@@ -1,28 +1,30 @@
 const originFormEle = document.querySelector(`.origin-form`);
 const destinationFormEle = document.querySelector(`.destination-form`);
+const originsUL = document.querySelector(`.origins`);
+const destinationsUL = document.querySelector(`.destinations`);
 
 const apikey = `pk.eyJ1Ijoic3VsYXlsaXUiLCJhIjoiY2thNWlrYmNnMDBpaDNsbm9lOHQ2MG5ncSJ9.iLbn-Tba_v8DH2S_ffwwDA`;
 
 originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
+
   if(value !== ``) {
-    console.log(value)
-    // searchLocation(value);
+    searchOriginLocation(value);
   }
   event.preventDefault();
 });
 
 destinationFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
+
   if(value !== ``) {
-    console.log(value)
-    // searchLocation(value);
+    searchDestinationLocation(value);
   }
   event.preventDefault();
 });
 
-function searchLocation(name) {
-  fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875, 49.766204, -96.953987, 49.99275&access_token=${apikey}&limit=10`)
+function searchOriginLocation(name) {
+  fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=${apikey}&limit=10`)
     .then((resp) => {
       if (resp.ok) {
         return resp.json();
@@ -31,27 +33,23 @@ function searchLocation(name) {
       }
     })
     .then((json) => {
-      getStreetList(json.features);
+      getOriginsList(json.features);
     })
 }
 
-function getStreetList(features) {
+function getOriginsList(features) {
   let streetHTML = ``;
+  originsUL.innerHTML = ``;
 
-  features.sort((a, b) => GetDistance(a.center[0], a.center[1], localLng, localLat) - GetDistance(b.center[0], b.center[1], localLng, localLat));
-  
   features.forEach(feature => {
     if (feature.properties.address !== undefined) {
       streetHTML +=  `
-      <li class="poi" data-long="${feature.center[0]}" data-lat="${feature.center[1]}">
-        <ul>
-          <li class="name">${feature.text}</li>
-          <li class="street-address">${feature.properties.address}</li>
-          <li class="distance">${GetDistance(feature.center[0], feature.center[1], localLng, localLat)} KM</li>
-        </ul>
-      </li>`
+        <li data-long="${feature.center[0]}" data-lat="${feature.center[1]}" class="selected">
+          <div class="name">${feature.text}</div>
+          <div>${feature.properties.address}</div>
+        </li>`
     }
   });
 
-  ulEle.innerHTML = streetHTML;
+  originsUL.innerHTML = streetHTML;
 }
