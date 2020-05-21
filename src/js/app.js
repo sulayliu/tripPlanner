@@ -9,7 +9,7 @@ originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
 
   if(value !== ``) {
-    searchOriginLocation(value);
+    searchLocation(value, originsUL);
   }
   event.preventDefault();
 });
@@ -18,12 +18,12 @@ destinationFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
 
   if(value !== ``) {
-    searchDestinationLocation(value);
+    searchLocation(value, destinationsUL);
   }
   event.preventDefault();
 });
 
-function searchOriginLocation(name) {
+function searchLocation(name, ULEle) {
   fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=${apikey}&limit=10`)
     .then((resp) => {
       if (resp.ok) {
@@ -33,13 +33,13 @@ function searchOriginLocation(name) {
       }
     })
     .then((json) => {
-      getOriginsList(json.features);
+      getStreetsList(json.features, ULEle);
     })
 }
 
-function getOriginsList(features) {
+function getStreetsList(features, ULEle) {
   let streetHTML = ``;
-  originsUL.innerHTML = ``;
+  ULEle.innerHTML = ``;
 
   features.forEach(feature => {
     if (feature.properties.address !== undefined) {
@@ -51,5 +51,5 @@ function getOriginsList(features) {
     }
   });
 
-  originsUL.innerHTML = streetHTML;
+  ULEle.innerHTML = streetHTML;
 }
