@@ -2,12 +2,14 @@ const originFormEle = document.querySelector(`.origin-form`);
 const destinationFormEle = document.querySelector(`.destination-form`);
 const originsUL = document.querySelector(`.origins`);
 const destinationsUL = document.querySelector(`.destinations`);
+const buttonEle = document.querySelector(`.plan-trip`);
 let originLon;
 let originLat;
 let destinationLon;
 let destinationLat;
 
-const apikey = `pk.eyJ1Ijoic3VsYXlsaXUiLCJhIjoiY2thNWlrYmNnMDBpaDNsbm9lOHQ2MG5ncSJ9.iLbn-Tba_v8DH2S_ffwwDA`;
+const mapKey = `pk.eyJ1Ijoic3VsYXlsaXUiLCJhIjoiY2thNWlrYmNnMDBpaDNsbm9lOHQ2MG5ncSJ9.iLbn-Tba_v8DH2S_ffwwDA`;
+const tranKey = `1JEha51b8t7HwrkzlGmM`;
 
 originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
@@ -55,11 +57,12 @@ destinationsUL.addEventListener(`click`, function(event) {
   destinationLon = clickedEle.dataset.long;
   destinationLat = clickedEle.dataset.lat;
   console.log(destinationLon, destinationLat);
-})
+});
+
 
 
 function searchLocation(name, ULEle) {
-  fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=${apikey}&limit=10`)
+  fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=${mapKey}&limit=10`)
     .then((resp) => {
       if (resp.ok) {
         return resp.json();
@@ -88,3 +91,4 @@ function getStreetsList(features, ULEle) {
 
   ULEle.innerHTML = streetHTML;
 }
+
