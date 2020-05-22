@@ -1,21 +1,20 @@
 const originFormEle = document.querySelector(`.origin-form`);
 const destinationFormEle = document.querySelector(`.destination-form`);
-const originsUL = document.querySelector(`.origins`);
-const destinationsUL = document.querySelector(`.destinations`);
+const originUL = document.querySelector(`.origins`);
+const destinationUL = document.querySelector(`.destinations`);
 const buttonEle = document.querySelector(`.plan-trip`);
+const mapKey = `pk.eyJ1Ijoic3VsYXlsaXUiLCJhIjoiY2thNWlrYmNnMDBpaDNsbm9lOHQ2MG5ncSJ9.iLbn-Tba_v8DH2S_ffwwDA`;
+const tranKey = `1JEha51b8t7HwrkzlGmM`;
 let originLon;
 let originLat;
 let destinationLon;
 let destinationLat;
 
-const mapKey = `pk.eyJ1Ijoic3VsYXlsaXUiLCJhIjoiY2thNWlrYmNnMDBpaDNsbm9lOHQ2MG5ncSJ9.iLbn-Tba_v8DH2S_ffwwDA`;
-const tranKey = `1JEha51b8t7HwrkzlGmM`;
-
 originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
 
   if(value !== ``) {
-    searchLocation(value, originsUL);
+    searchLocation(value, originUL);
   }
   event.preventDefault();
 });
@@ -24,39 +23,27 @@ destinationFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
 
   if(value !== ``) {
-    searchLocation(value, destinationsUL);
+    searchLocation(value, destinationUL);
   }
   event.preventDefault();
 });
 
-originsUL.addEventListener(`click`, function(event) {
-  const lists = originsUL.querySelectorAll(`li`);
+originUL.addEventListener(`click`, function(event) {
   const clickedEle = event.target.closest('li');
 
-  lists.forEach((list) => {
-    if(list.classList.contains(`selected`)) {
-      list.classList.remove(`selected`);
-    }
-  })
+  removeTheSelectedList(originUL);
   clickedEle.classList.add(`selected`);
   originLon = clickedEle.dataset.long;
   originLat = clickedEle.dataset.lat;
-  console.log(originLon, originLat);
 });
 
-destinationsUL.addEventListener(`click`, function(event) {
-  const lists = destinationsUL.querySelectorAll(`li`);
+destinationUL.addEventListener(`click`, function(event) {
   const clickedEle = event.target.closest('li');
 
-  lists.forEach((list) => {
-    if(list.classList.contains(`selected`)) {
-      list.classList.remove(`selected`);
-    }
-  })
+  removeTheSelectedList(destinationUL);
   clickedEle.classList.add(`selected`);
   destinationLon = clickedEle.dataset.long;
   destinationLat = clickedEle.dataset.lat;
-  console.log(destinationLon, destinationLat);
 });
 
 buttonEle.addEventListener(`click`, function(event) {
@@ -72,6 +59,18 @@ buttonEle.addEventListener(`click`, function(event) {
 // function that capitalize the first letter.
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
+}
+
+
+//
+function removeTheSelectedList(location) {
+  const lists = location.querySelectorAll(`li`);
+
+  lists.forEach((list) => {
+    if(list.classList.contains(`selected`)) {
+      list.classList.remove(`selected`);
+    }
+  });
 }
 
 // Search location function.
@@ -121,16 +120,6 @@ function GetTrip(originlat, originlon, destlat, destlon) {
       console.log(json.plans[0].segments);
       TripplanHTML(json.plans[0].segments);
     })
-}
-
-// A function that return the related icon class.
-function getIconClass(name) {
-  const icons = {
-    walk: `fas fa-walking`,
-    ride: `fas fa-bus`,
-    transfer :`fas fa-ticket-alt`,
-  };
-  return icons[name];
 }
 
 function TripplanHTML(segments) {
