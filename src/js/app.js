@@ -59,7 +59,15 @@ destinationsUL.addEventListener(`click`, function(event) {
   console.log(destinationLon, destinationLat);
 });
 
-
+buttonEle.addEventListener(`click`, function(event) {
+  if(originLon !== undefined && destinationLon !== undefined) {
+    if(originLat == destinationLat && originLon == destinationLon) {
+      alert(`No need move!`);
+    } else {
+      GetTrip(originLat, originLon, destinationLat, destinationLon);
+    }
+  }
+});
 
 function searchLocation(name, ULEle) {
   fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=${mapKey}&limit=10`)
