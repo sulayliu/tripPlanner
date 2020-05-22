@@ -12,6 +12,8 @@ let destinationLat;
 
 originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
+  originLat = undefined;
+  originLon = undefined;
 
   if(value !== ``) {
     searchLocation(value, originUL);
@@ -21,6 +23,9 @@ originFormEle.addEventListener(`submit`, function(event){
 
 destinationFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
+
+  destinationLon = undefined;
+  destinationLat = undefined;
 
   if(value !== ``) {
     searchLocation(value, destinationUL);
@@ -61,8 +66,7 @@ String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
 
-
-//
+// Remove the selected class from existed list.
 function removeTheSelectedList(location) {
   const lists = location.querySelectorAll(`li`);
 
