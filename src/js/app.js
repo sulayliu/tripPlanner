@@ -54,7 +54,7 @@ destinationUL.addEventListener(`click`, function(event) {
 buttonEle.addEventListener(`click`, function(event) {
   if(originLon !== undefined && destinationLon !== undefined) {
     if(originLat == destinationLat && originLon == destinationLon) {
-      alert(`No need move!`);
+      alert(`No need to move!`);
     } else {
       GetTrip(originLat, originLon, destinationLat, destinationLon);
     }
@@ -121,16 +121,15 @@ function GetTrip(originlat, originlon, destlat, destlon) {
       }
     })
     .then((json) => {
-      console.log(json.plans[0].segments);
       TripplanHTML(json.plans[0].segments);
     })
 }
 
+// List the trip plan on the page.
 function TripplanHTML(segments) {
   const mytripEle = document.querySelector(`.my-trip`);
   mytripEle.innerHTML = ``;
   let html = ``;
-
   segments.forEach((segment) => {
     if (segment.type === `walk`) {
       if (segment.to.stop === undefined) {
@@ -149,7 +148,7 @@ function TripplanHTML(segments) {
     } else if (segment.type === `ride`) {
       html +=  `<li>
         <i class="fas fa-bus" aria-hidden="true"></i>
-        ${segment.type.capitalize()} the Route ${segment.route.key} ${segment.route.name} for ${segment.times.durations.total} minutes.
+        ${segment.type.capitalize()} the ${segment.route.name ? segment.route.name : segment.route.key} for ${segment.times.durations.total} minutes.
       </li>`
     } else if (segment.type === `ride`) {
       html +=  `<li>
