@@ -2,10 +2,10 @@ const originFormEle = document.querySelector(`.origin-form`);
 const destinationFormEle = document.querySelector(`.destination-form`);
 const originsUL = document.querySelector(`.origins`);
 const destinationsUL = document.querySelector(`.destinations`);
-let originLat;
 let originLon;
-let destinationLat;
+let originLat;
 let destinationLon;
+let destinationLat;
 
 const apikey = `pk.eyJ1Ijoic3VsYXlsaXUiLCJhIjoiY2thNWlrYmNnMDBpaDNsbm9lOHQ2MG5ncSJ9.iLbn-Tba_v8DH2S_ffwwDA`;
 
@@ -37,7 +37,9 @@ originsUL.addEventListener(`click`, function(event) {
     }
   })
   clickedEle.classList.add(`selected`);
-  console.log(clickedEle);
+  originLon = clickedEle.dataset.long;
+  originLat = clickedEle.dataset.lat;
+  console.log(originLon, originLat);
 });
 
 destinationsUL.addEventListener(`click`, function(event) {
@@ -50,7 +52,9 @@ destinationsUL.addEventListener(`click`, function(event) {
     }
   })
   clickedEle.classList.add(`selected`);
-  console.log(clickedEle);
+  destinationLon = clickedEle.dataset.long;
+  destinationLat = clickedEle.dataset.lat;
+  console.log(destinationLon, destinationLat);
 })
 
 
