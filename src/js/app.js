@@ -100,3 +100,16 @@ function getStreetsList(features, ULEle) {
   ULEle.innerHTML = streetHTML;
 }
 
+function GetTrip(originlat, originlon, destlat, destlon) {
+  fetch(`https://api.winnipegtransit.com/v3/trip-planner.json?origin=geo/${originlat},${originlon}&api-key=${tranKey}&destination=geo/${destlat},${destlon}`)
+    .then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error("There is an error on getting trip.");
+      }
+    })
+    .then((json) => {
+      console.log(json.plans[0]);
+    })
+}
