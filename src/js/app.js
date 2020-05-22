@@ -113,3 +113,12 @@ function GetTrip(originlat, originlon, destlat, destlon) {
       console.log(json.plans[0]);
     })
 }
+
+function getIconClass(name) {
+  const icons = {
+    walk: `fas fa-walking`,
+    ride: `fas fa-bus`,
+    transfer :`fas fa-ticket-alt`,
+  };
+  return icons[name];
+}
