@@ -10,8 +10,11 @@ let originLat;
 let destinationLon;
 let destinationLat;
 
+// Add event listener on the origin form element to get the input value.
 originFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
+  
+  // Clear the lat and lon of origin.
   originLat = undefined;
   originLon = undefined;
 
@@ -21,9 +24,11 @@ originFormEle.addEventListener(`submit`, function(event){
   event.preventDefault();
 });
 
+// Add event listener on the destination form element to get the input value.
 destinationFormEle.addEventListener(`submit`, function(event){
   const value = event.target.querySelector(`input`).value;
 
+  // Clear the lat and lon of destination.
   destinationLon = undefined;
   destinationLat = undefined;
 
@@ -33,6 +38,7 @@ destinationFormEle.addEventListener(`submit`, function(event){
   event.preventDefault();
 });
 
+// When click on the origin list, get the latitude and longitude.
 originUL.addEventListener(`click`, function(event) {
   const clickedEle = event.target.closest('li');
 
@@ -42,6 +48,7 @@ originUL.addEventListener(`click`, function(event) {
   originLat = clickedEle.dataset.lat;
 });
 
+// When click on the destination list, get the latitude and longitude.
 destinationUL.addEventListener(`click`, function(event) {
   const clickedEle = event.target.closest('li');
 
@@ -77,7 +84,7 @@ function removeTheSelectedList(location) {
   });
 }
 
-// Search location function.
+// Search location through input value.
 function searchLocation(name, ULEle) {
   fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${name}.json?bbox=-97.325875,49.766204,-96.953987,49.99275&access_token=${mapKey}&limit=10`)
     .then((resp) => {
@@ -150,7 +157,7 @@ function TripplanHTML(segments) {
         <i class="fas fa-bus" aria-hidden="true"></i>
         ${segment.type.capitalize()} the ${segment.route.name ? segment.route.name : segment.route.key} for ${segment.times.durations.total} minutes.
       </li>`
-    } else if (segment.type === `ride`) {
+    } else if (segment.type === `transfer`) {
       html +=  `<li>
       <i class="fas fa-ticket-alt" aria-hidden="true"></i>
       ${segment.type.capitalize()} from stop #${segment.from.stop.key} - ${segment.from.stop.name} to stop #${segment.to.stop.key} - ${segment.to.stop.name}
