@@ -68,7 +68,7 @@ buttonEle.addEventListener(`click`, function(event) {
   }
 });
 
-// function that capitalize the first letter.
+// Function to capitalize the first letter.
 String.prototype.capitalize = function() {
   return this.charAt(0).toUpperCase() + this.slice(1)
 }
