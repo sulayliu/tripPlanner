@@ -6,4 +6,4 @@
 * The program displays the estimated time between each segment of a trip. A trip can have 1 or more segments. The segments of the trip are "walk", "Transfer" and "Ride".
 
 # How to start?
-when users should open the index.html file in the browser, the page works.
+Whenever users should open the index.html file in the browser, the page works.
